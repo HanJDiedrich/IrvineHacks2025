@@ -2,10 +2,10 @@ import mysql.connector     # For connecting to SQL database
 
 # Database Configuration
 CONFIG = {
-    'host' : '',
-    'user' : '',
-    'password' : '',
-    'database' : ''
+    'host' : 'localhost',
+    'user' : 'gameUser',
+    'password' : 'password',
+    'database' : 'connectiondb'
 }
 
 class MySQLManager():
