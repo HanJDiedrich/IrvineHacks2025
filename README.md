@@ -15,5 +15,9 @@ Search through connections via subject tags or visit the link sent by your frien
 FRONTEND
 React for good interactive features
 
+use fetch
+
 BACKEND
 Api to handle communication (fetching template, submitting guesses, and sharing games)
+use flask
+
