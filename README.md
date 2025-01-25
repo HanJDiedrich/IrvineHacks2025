@@ -1,6 +1,18 @@
 # IrvineHacks2025
 Irvine Hacks 2025 project!
 
+TEAM MEMBERS:
+Han
+Angie
+Danica
+Xuan
+
+
+DEPENDECIES:
+mysql connector
+flask
+mysql
+
 
 Connections
 Create your own connections by inputting your own 4 lines, and 16 objects, as well as selecting a category, 
