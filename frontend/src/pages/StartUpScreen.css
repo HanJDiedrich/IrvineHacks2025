@@ -1,0 +1,69 @@
+.startUpScreen {
+    width: 100%;
+    height: 100vh; /* Full viewport height */
+    background-color: #c0d4f0; /* Background color for the startup screen */
+    display: flex; /* Enable flexbox */
+    flex-direction: column; /* Stack items vertically */
+    align-items: center; /* Center items horizontally */
+    justify-content: center; /* Center items vertically */
+    overflow: hidden; /* Prevent scrolling */
+    text-align: center; /* Center text */
+    font-family: 'DM Sans', sans-serif; /* Font family */
+  }
+  
+  .startUpScreenChild {
+    background-color: #0d2c54; /* Navy background */
+    width: 100%; /* Full width */
+    height: 100px; /* Fixed height for the header */
+    display: flex;
+    align-items: center;
+    justify-content: space-between; /* Space between logo and links */
+    padding: 0 20px; /* Horizontal padding */
+    box-sizing: border-box;
+  }
+  
+  .zottegories {
+    color: #f0cf65; /* Yellow text for the header title */
+    font-size: 24px; /* Font size */
+  }
+  
+  .searchASet {
+    font-size: 24px;
+    text-decoration: underline;
+    color: #fff; /* White text for the link */
+    cursor: pointer; /* Pointer cursor for interaction */
+  }
+  
+  .zottegories1 {
+    font-size: 96px; /* Large font for main title */
+    color: #000; /* Black text */
+    margin: 20px 0; /* Spacing above and below */
+  }
+  
+  .letsMakeSome {
+    font-size: 48px; /* Subtitle font size */
+    color: #000; /* Black text */
+    margin: 20px 0; /* Spacing above and below */
+  }
+  
+  .startUpScreenItem,
+  .startUpScreenInner {
+    border-radius: 20px; /* Rounded corners */
+    background-color: #0d2c54; /* Navy button background */
+    color: #fff; /* White text */
+    width: 308px; /* Button width */
+    height: 92px; /* Button height */
+    display: flex;
+    align-items: center; /* Center text vertically */
+    justify-content: center; /* Center text horizontally */
+    font-size: 24px; /* Text size */
+    margin: 10px; /* Spacing between buttons */
+    cursor: pointer; /* Pointer cursor for interaction */
+    transition: background-color 0.3s ease; /* Smooth hover effect */
+  }
+  
+  .startUpScreenItem:hover,
+  .startUpScreenInner:hover {
+    background-color: #f0cf65; /* Yellow hover effect */
+    color: #0d2c54; /* Navy text on hover */
+  }

@@ -1,0 +1,21 @@
+.input {
+    border-radius: 8px;
+    border: solid;
+}
+
+.card {
+    display: flex;
+    width: 100%;
+    background-color: #88b2c1;
+    padding: 10px;
+}
+
+.card:hover {
+    background-color: #608daf;
+}
+
+.scroll {
+    max-height: 125px;
+    overflow-y: scroll;
+    scrollbar-width: none;
+}

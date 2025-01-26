@@ -1,0 +1,78 @@
+.game-container {
+    font-family: 'DM Sans', serif;
+    background-color: #ffffff;
+    margin: 0;
+    padding: 0;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    height: 100vh;
+  }
+  
+.title-container {
+    position: absolute;
+    top: 100px;
+    right: 530px;
+    transform: translateX(-50%);
+    text-align: center;
+}
+
+.title {
+    margin: 0;
+}
+
+.subtitle {
+    font-size: 0.7rem;
+}
+
+.app {
+    text-align: center;
+}
+
+h1 {
+    font-size: 2rem;
+    margin-bottom: 20px;
+}
+
+.grid {
+    display: grid;
+    grid-template-columns: repeat(6, 1fr); /* 4x4 */
+    gap: 10px;
+}
+
+.tile {
+    font-family: Trebuchet, sans-serif;
+    width: 100px;
+    height: 100px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    background-color: #efefe6;
+    border: 2px solid #efefe6;
+    border-radius: 8px;
+    font-size: 16px;
+    font-weight: bold;
+    cursor: pointer;
+    transition: background-color 0.3s, transform 0.2s;
+}
+
+.tile:hover {
+    background-color: #c1bfab;
+    transform: scale(1.05);
+}
+
+.tile:active {
+    background-color: #5a594e;
+    color: white;
+}
+
+.tile.selected {
+    background-color: #5a594e;
+    color: white;
+}
+
+.shuffleButton{
+    margin-top: -20px;
+}
+  

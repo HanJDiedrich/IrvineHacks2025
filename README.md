@@ -12,6 +12,11 @@ DEPENDECIES:
 mysql connector
 flask
 mysql
+react
+node.js
+npm
+react-router-dom
+bootstrap
 
 
 Connections
