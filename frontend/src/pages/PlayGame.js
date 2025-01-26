@@ -1,16 +1,18 @@
 import "./PlayGame.css";
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
 import Gameboard from '../components/gameboard';
-// import anteaterLogo from '../assets/anteater-logo.png'
+import { useLocation } from "react-router-dom";
 
-function GameLives( {attempts} ) {
+
+function GameLives( {attempts, isDeleting} ) {
     return (
         <div className="lives-container">
             Mistakes Remaining: 
             {attempts.map((life, index) => 
                 life ? (
-                    <div key={index} className="circle">
-                        {/* <img src={anteaterLogo} alt="Anteater lives"/> */}
+                    <div key={index} 
+                         className={`circle ${isDeleting === index ? "fade" : ""}`}
+                    >
                     </div>
                 ) : null
             )}
@@ -19,17 +21,71 @@ function GameLives( {attempts} ) {
 }
 
 function PlayGame() {
+    const location = useLocation()
+    const state = location.state
+    console.log(state)
+    
     const [attempts, setAttempts] = useState([true, true, true, true]);
+    const [isDeleting, setIsDeleting] = useState(null);     // For unsuccessful matches
+    const [isHopping, setIsHopping] = useState(false);      // For successful matches
+    const [isVisible, setIsVisible] = useState(false);      // For transition
 
-    const handleSubmit = () => {
-        setAttempts({
-        });
+    const words = [                                         // Structure for words in tiles
+        {group1 : [
+            {word : "WORD1", selected : false}, 
+            {word : "WORD2", selected : false}, 
+            {word : "WORD3", selected : false}, 
+            {word : "WORD4", selected : false}] 
+        },
+        {group2 : [
+            {word : "WORD5", selected : false}, 
+            {word : "WORD6", selected : false}, 
+            {word : "WORD7", selected : false}, 
+            {word : "WORD8", selected : false}]
+        },
+        {group3 : [
+            {word : "WORD9", selected : false}, 
+            {word : "WORD10", selected : false}, 
+            {word : "WORD11", selected : false}, 
+            {word : "WORD12", selected : false}]
+        },
+        {group4 : [
+            {word : "WORD13", selected : false}, 
+            {word : "WORD14", selected : false}, 
+            {word : "WORD15", selected : false}, 
+            {word : "WORD16", selected : false}]
+        },
+      ];
+
+    // Need to check if a group of words selected is part of the same group name
+
+    function checkGroup() {
+    
+    }
+    useEffect(() => {
+        setIsVisible(true);
+        document.title = "Play Game";
+    }, []);
+
+    const handleSubmit = ( isCorrect ) => {                            
+        // Correct answer
+        if (isCorrect) {
+            setIsHopping(true);
+            setTimeout(() => setIsHopping(false), 500);         // Control wait time for bouncing animation
+        } else {
+            // Incorrect answer
+            setIsDeleting(attempts.length - 1);
+            setTimeout(() => {
+                setAttempts(attempts => attempts.slice(0, -1));
+                setIsDeleting(null);
+            }, 300);                                            // Control wait time for deleting animation
+        }
     }
 
     return (
-        <div className="gameplay-container">
-            <Gameboard handleSubmit={handleSubmit}/>
-            <GameLives attempts={attempts} />
+        <div className={`gameplay-container ${isVisible ? "fade-in" : ""}`}>
+            <Gameboard words={words} handleSubmit={handleSubmit} isHopping={isHopping}/>
+            <GameLives attempts={attempts} isDeleting={isDeleting}/>
         </div>
     )
 }

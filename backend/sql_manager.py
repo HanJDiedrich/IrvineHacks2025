@@ -1,5 +1,6 @@
 import mysql.connector     # For connecting to SQL database
-
+import json
+from flask import Flask, jsonify
 # Database Configuration
 CONFIG = {
     'host' : 'localhost',
@@ -17,25 +18,47 @@ class MySQLManager():
         except mysql.connector.Error:
             print("Connection unsuccessful.")
     
-    # Search games by category
-    def search_games_categories(self, category):
-        query = f"SELECT g.name, g.gameLink FROM games g JOIN game_categories gc ON g.id = gc.gameId JOIN categories c ON c.id = gc.categoryId WHERE c.name = '{category}';"
-        self.cursor.execute(query)
-        results = self.cursor.fetchall()
-        return results
-    
-    # def upload_game_data(self):
-    #     # Json data needed for upload
-    #     data = request.json
-    #     name = data['name']
-    #     public = data['public']
-    #     rowX = data['rowX']
-    #     rowY = data['rowY']
-    #     creatorName = data['creatorName']
-    #     gameLink = data['gameLink']
-    #     gameData = data['gameData']
+    def get_games(self):
+        self.cursor.execute("SELECT name, creatorName, category, dateCreated FROM games")
+        games = self.cursor.fetchAll()
+        return jsonify(games)
+    def get_game_data(self, gameId):
+        pass
 
+    
+    def insert_new_game(self, gameName, public, creatorName, category, groups, wordsPerGroup, gameData, gameLink):
+        # insert into games
+        insert_query = """
+            INSERT INTO games (name, public, groupCount, wordsPerGroup, category, creatorName, gameLink)
+            VALUES (%s,%s,%s,%s,%s,%s,%s)
+            """      
+        self.cursor.execute(insert_query, (gameName, public, groups, wordsPerGroup, category, creatorName, gameLink))
+        self.connection.commit()
+        game_id = self.cursor.lastrowid
+        # insert into game data
+        insert_game_data_query = """
+            INSERT INTO game_data (gameId, data)
+            VALUES (%s, %s)
+            """
+        self.cursor.execute(insert_game_data_query, (game_id, json.dumps(gameData)))
+        self.connection.commit()
+
+       
+
+        ''' 
+         # Get category name
+        self.cursor.execute(f"SELECT id FROM categories WHERE name = '{[category]}'")
+        categoryId = self.cursor.fetchall()
+        # Insert into game_categories
+        insert_game_category_query = """
+            INSERT INTO game_categories (categoryId, gameId)
+            VALUES (%s, %s)
+            self.cursor.execute(insert_game_category_query, (categoryId, game_id))
+        self.connection.commit()
+        """'''
+       
         
+
     # Read commands from an SQL file
     def _execute_sql_commands(self, filepath):
         try: 

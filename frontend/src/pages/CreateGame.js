@@ -1,8 +1,10 @@
 // src/pages/Home.js
 import React, { useState, useEffect } from 'react';
+import './CreateGame.css';
+
 
 import { useNavigate } from 'react-router-dom';  // Import useNavigate for routing
-// import axios from 'axios';      // Using axios to make a POST request
+// import axios from 'axios';
 
 function CreateGame(){
     // Define state for form fields
@@ -12,6 +14,8 @@ function CreateGame(){
         creatorName: '',
         category: 'none',
         gameLink: '',
+        groups: 4,
+        wordsPerGroup: 4,
     });
 
     const [groups, setGroups] = useState(4)
@@ -24,7 +28,7 @@ function CreateGame(){
     // Change page title
     useEffect(() => {document.title = "Create Game";
         generateGameDataObject()
-    }, [groups, wordsPerGroup]); 
+    }, []); 
     
     // Handle gameData object generation
     const generateGameDataObject = () => {
@@ -125,19 +129,44 @@ function CreateGame(){
         setGameData(updatedGameData);
     } 
 
+    const navigate = useNavigate()
 
-    function handleSubmit(e) {
+    // SUBMIT actions
+    const handleSubmit = async (e) => {
+
         e.preventDefault() 
-
+        
+        gameInfo.groups = groups;
+        gameInfo.wordsPerGroup = wordsPerGroup;
         const gameUpload = {
             ...gameInfo,
             gameData,
         }
-
         console.log("Form Data:", JSON.stringify(gameUpload))
-        alert(JSON.stringify(gameInfo))
-        alert(JSON.stringify(gameData))
-        //axios.post('http://localhost:3000/api/items', gameInfo)       // Send a POST request to Flask backend
+
+        navigate('/PlayGame', {state: gameUpload})
+
+        try{
+            const response = await fetch("http://127.0.0.1:5000/upload_game_data", {
+                method: "POST",
+                headers:{
+                    "Content-Type": "application/json",
+                },
+                body: JSON.stringify(gameUpload)
+            });
+            if (response.ok){
+                const data = await response.json();
+                console.log("Game Created Successfully:", response.data);
+                alert("Game Created Successfully!");
+            }else{
+                console.log("Error creating game:");
+                alert("There was an error creating the game.");
+            }
+        } catch (error){
+            console.log("Network error:", error);
+            alert("There was a network error.");
+        }
+
     }
 
     //const [data, setdate] = useState(({}));
@@ -147,19 +176,18 @@ function CreateGame(){
 
       //fetch("http://localhost:5000/api").then(response => response.jpsn()).then;
     
-      return (
-      <div className="container text-center my-5">
+    return (
+      <div className="container">
         
-        <h1 className="display-4 text-success">Create game</h1>
+        <h1>Your New Set</h1>
         
-        <p className="lead text-muted">
-            Create game using this form
-            <form onSubmit={handleSubmit}>
+        <p className="lead">Create your own connections using this form!</p>
+        <form onSubmit={handleSubmit}>
 
-                {/*Game name input*/}
-                <div className="mb-3">
-                    <label>Game Name</label>
-                    <input 
+            {/*Game name input*/}
+            <div className="mb-3">
+                <label>Game Name</label>
+                <input 
                     type="text"
                     name = "gameName"
                     value={gameInfo.gameName}
@@ -171,25 +199,30 @@ function CreateGame(){
                 {/*Creator name input*/}
                 <div className="mb-3">
                     <label>Creator Name</label>
-                    <input type="text"
+                    <input 
+                    type="text"
                     name = "creatorName"
                     value={gameInfo.creatorName}
                     onChange={creatorNameChange}
-                    required/>
+                    required
+                    />
                 </div>
 
                 {/*Game Visibility (Public/Private) input*/}
                 <div className="mb-3">
                     <label>Game Visibility</label>
-                    <input type="radio"
+                    <input 
+                    type="radio"
                     name = "visibility"
                     value= {true}
                     checked={gameInfo.public === true}
                     onChange={visibilityChange}
                     required/>
+
                     Public
 
-                    <input type="radio"
+                    <input 
+                    type="radio"
                     name = "visibility"
                     value = {false}
                     checked={gameInfo.public === false}
@@ -235,53 +268,40 @@ function CreateGame(){
                         value={wordsPerGroup}
                     >
                         {Array.from({ length: 7 }, (_, i) => i + 2).map((num) => (
-                        <option key={num} value={num}>{num}</option>))}
+                        <option key={num} value={num}>{num}</option>
+                        ))}
                     </select>
                 </div>
             
-                {gameData.map((groupObject, indexGroup)=>
-                <div>
+                {gameData.map((groupObject, indexGroup)=> (
+                    <div key={indexGroup} className="word-group">
                         <div className="mb-3">
                             <label>Group name</label>
-                            <input type="text"
+                            <input 
+                            type="text"
                             name = "groupName"
                             value = {gameData[indexGroup].groupName}
                             onChange={(e)=>updateGameDataGroup(e.target.value, indexGroup)} // update group
                             required/>
                         </div>
-                        {groupObject.words.map((words, indexWord)=>
-                            <div>
-                                <p></p>
-                                <div >
-                                    <label>inputBox</label>
+                        {groupObject.words.map((words, indexWord) => (
+                            <div key={indexWord} className="mb-3">
+                                <label>Word {indexWord + 1}</label>
                                     <input type="text"
                                     name = "wordInput"
                                     value={gameData[indexGroup].words[indexWord]}
                                     onChange={(e)=>updateGameDataWords(e.target.value, indexGroup, indexWord)} //update words
                                     required/>
                                 </div>
-                            </div>
-                        )}
-                </div>)}
+        ))}
+    </div>
+))}
 
-                <button type="submit">
-                    Submit
-                </button>
-             </form>
-        </p>
-      </div>
-    );
-}
+    
+
+        <button type="submit">Play Game</button>
+     </form>
+    </div>
+);}
+
 export default CreateGame;
-
-
-  {/*
-                    {x.map((y)=>
-                    
-                    <div>
-                        <label htmlfor="box">Box</label>
-                        <input
-                        type="text"
-                        />
-
-                        </div>)}*/}

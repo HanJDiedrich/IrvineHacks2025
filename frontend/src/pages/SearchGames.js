@@ -36,13 +36,10 @@ function SearchGames() {
 
   const [search, setSearch] = useState("");
 
-  const games = [{name: "Han"}, 
-                 {name : "Angie"}, 
-                 {name : "Xuan"}, 
-                 {name: "Danica"},
-                 {name: "Game1"},
-                 {name: "Game2"},
-                 {name: "Game3"},];    // Test with a hardcoded array of game names for now
+  const games = [{name: "Game1"}, 
+                 {name : "Game2"}, 
+                 {name : "Game3"}, 
+                 {name: "Game4"}];    // Replace with user-inputted games
 
   const filteredGames = games.filter(
     game => {

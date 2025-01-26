@@ -5,8 +5,8 @@
 -- How to login: mysql -u gameUser -p
 
 -- Creating categories
-INSERT INTO game_categories (categoryId, gameId)
-VALUES ('Math'), ('Programming'); 
+INSERT INTO categories (name)
+VALUES ('none'), ('math'), ('programming'), ('science'), ('history'); 
 
 --Creating a new game
 INSERT INTO games (name, public, rowX, colY, creatorName, gameLink) 

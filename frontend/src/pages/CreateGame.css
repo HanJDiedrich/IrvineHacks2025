@@ -1,0 +1,113 @@
+.container {
+    max-width: 800px;
+    margin: 0 auto;
+    padding: 20px;
+    background-color: #f9f9f9;
+    border-radius: 10px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+  }
+
+  /* Heading styles */
+h1 {
+    font-family: 'DM Sans', sans-serif;
+    font-size: 2.5rem;
+    color: #0d2c54;
+  }
+  
+  p.lead {
+    font-family: 'DM Sans', sans-serif;
+    font-size: 1.1rem;
+    color: #6c757d;
+    margin-bottom: 20px;
+  }
+
+  form {
+    display: flex;
+    flex-direction: column;
+    gap: 15px;
+  }
+
+  .mb-3 {
+    display: flex;
+    flex-direction: column;
+    gap: 5px;
+  }
+
+  label {
+    font-family: 'DM Sans', sans-serif;
+    font-size: 1rem;
+    color: #0d2c54;
+  }
+
+input[type="text"],
+input[type="radio"],
+select {
+  padding: 10px;
+  border: 1px solid #ccc;
+  border-radius: 8px;
+  font-size: 1rem;
+  outline: none;
+}
+
+input[type="text"]:focus,
+select:focus {
+  border-color: #0d2c54;
+  box-shadow: 0 0 5px rgba(13, 44, 84, 0.5);
+}
+
+select {
+    padding: 10px;
+    font-size: 1rem;
+  }
+
+  button[type="submit"] {
+    padding: 12px 20px;
+    background-color: #426a5a;
+    color: white;
+    font-size: 1.2rem;
+    border: none;
+    border-radius: 8px;
+    cursor: pointer;
+    transition: background-color 0.3s ease;
+  }
+  
+  button[type="submit"]:hover {
+    background-color: #2e4b3d;
+  }
+  
+  /* Radio buttons styling */
+  input[type="radio"] {
+    margin-right: 10px;
+  }
+
+  .group-input,
+.word-input {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+}
+
+.group-input input,
+.word-input input {
+  width: 100%;
+}
+
+/* Media Queries for Responsiveness */
+@media screen and (max-width: 768px) {
+  .container {
+    padding: 15px;
+  }
+  
+  h1 {
+    font-size: 2rem;
+  }
+  
+  p.lead {
+    font-size: 1rem;
+  }
+  
+  button[type="submit"] {
+    padding: 10px 18px;
+    font-size: 1rem;
+  }
+}

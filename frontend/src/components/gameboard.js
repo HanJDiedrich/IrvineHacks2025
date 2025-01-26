@@ -1,29 +1,14 @@
 import React, { useState } from "react";
 import "./gameboard.css";
 
-const words = [
-  {word : "WORD1", selected : false}, 
-  {word : "WORD2", selected : false}, 
-  {word : "WORD3", selected : false}, 
-  {word : "WORD4", selected : false}, 
-  {word : "WORD5", selected : false}, 
-  {word : "WORD6", selected : false}, 
-  {word : "WORD7", selected : false}, 
-  {word : "WORD8", selected : false}, 
-  {word : "WORD9", selected : false}, 
-  {word : "WORD10", selected : false}, 
-  {word : "WORD11", selected : false}, 
-  {word : "WORD12", selected : false}, 
-  {word : "WORD13", selected : false}, 
-  {word : "WORD14", selected : false}, 
-  {word : "WORD15", selected : false}, 
-  {word : "WORD16", selected : false}, 
-  {word : "WORD17", selected : false}, 
-  {word : "WORD18", selected : false}, 
-];
-
-function Gameboard( {handleSubmit} ) {
-  const [tiles, setTiles] = useState(words);
+function Gameboard( {words, handleSubmit, isHopping} ) { 
+    const allWords = words.flatMap(group => {
+    const groupKey = Object.keys(group)[0];
+    return group[groupKey].map(item => (
+        { word: item.word, 
+          selected: item.selected}
+        ));
+    });
 
   // shuffle word function
   const shuffleArray = (array) => {
@@ -35,16 +20,44 @@ function Gameboard( {handleSubmit} ) {
   };
 
   const shuffleWords = () => {
-    setTiles(shuffleArray([...words])); // Create a new array to avoid mutation
+    setTiles(shuffleArray([...allWords])); // Create a new array to avoid mutation
   };
 
+  // Need to shuffle tiles
+  const [tiles, setTiles] = useState(shuffleArray(allWords));
+
+  function checkCorrectGroups() {
+    // Check if selected tiles in the same group in words array
+    for (const group of words) {
+        const groupName = Object.keys(group)[0];
+        const groupArray = group[groupName];
+
+        const allSelectedMatch = groupArray.every(word => word.selected);
+        
+        if (allSelectedMatch) {
+            console.log("True")
+            return true;
+        }
+
+    console.log("False")
+    return false;
+  }
+}
+
+  // Select max 4 tiles
   const handleTileClick = (index) => {
     const newSelectedTiles = [...tiles];
     console.log(tiles.filter(e => e.selected).length < 4)
+
     if (newSelectedTiles[index].selected || tiles.filter(e => e.selected).length < 4) {
       newSelectedTiles[index].selected = !newSelectedTiles[index].selected;
       setTiles(newSelectedTiles);
     }
+  };
+
+  const handleTileSubmit = () => {
+    const isCorrect = handleTileClick();
+    return handleSubmit(isCorrect);
   };
 
   return (
@@ -59,7 +72,7 @@ function Gameboard( {handleSubmit} ) {
             Shuffle Words
         </button>
 
-        <button id="submitButton" onClick={handleSubmit}>
+        <button id="submitButton" onClick={handleTileSubmit}>
             Submit
         </button>
       </div>
@@ -68,7 +81,7 @@ function Gameboard( {handleSubmit} ) {
         {tiles.map((word, index) => (
           <div
             key={index}
-            className={`tile ${word.selected ? 'selected' : ''}`}
+            className={`tile ${isHopping ? 'hopping' : ''} ${word.selected ? 'selected' : ''}`}
             onClick={() => handleTileClick(index)}
           >
             {word.word}
