@@ -23,7 +23,7 @@ function GameLives( {attempts, isDeleting} ) {
 function PlayGame() {
     const location = useLocation()
     const state = location.state
-    console.log(state)
+    console.log("Receive data", state)
     
     const [attempts, setAttempts] = useState([true, true, true, true]);
     const [isDeleting, setIsDeleting] = useState(null);     // For unsuccessful matches

@@ -28,7 +28,7 @@ function CreateGame(){
     // Change page title
     useEffect(() => {document.title = "Create Game";
         generateGameDataObject()
-    }, []); 
+    }, [groups, wordsPerGroup]); 
     
     // Handle gameData object generation
     const generateGameDataObject = () => {
@@ -299,7 +299,7 @@ function CreateGame(){
 
     
 
-        <button type="submit">Play Game</button>
+        <button type="submit">Pla</button>
      </form>
     </div>
 );}
