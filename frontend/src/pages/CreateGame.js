@@ -299,7 +299,7 @@ function CreateGame(){
 
     
 
-        <button type="submit">Pla</button>
+        <button type="submit">Play Now</button>
      </form>
     </div>
 );}

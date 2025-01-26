@@ -10,6 +10,8 @@ function Gameboard( {words, handleSubmit, isHopping} ) {
         ));
     });
 
+    
+
   // shuffle word function
   const shuffleArray = (array) => {
     for (let i = array.length - 1; i > 0; i--) {

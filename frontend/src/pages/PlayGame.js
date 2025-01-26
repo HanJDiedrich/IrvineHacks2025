@@ -24,12 +24,48 @@ function PlayGame() {
     const location = useLocation()
     const state = location.state
     console.log("Receive data", state)
+    console.log("Game name", state.gameName)
+    console.log("Groups", state.groups)
+    console.log("WordsPerGroup", state.wordsPerGroup)
+    console.log("CreatorName:", state.creatorName)
+    console.log("Category:", state.category)
+    console.log("Visibility:", state.public)
+
+
+    // Depending on how many groups and wordsPerGroup, create game board
     
+    for (let i = 0; i < state.groups; i++){
+        console.log(state.gameData[i].groupName)
+        for (let j = 0; j < state.wordsPerGroup; j++){
+            console.log(state.gameData[i].words[j])
+        }
+    }
+
+    // Data structure for words
+    const wordGrid = [];
+    for (let i = 0; i < state.groups; i++){
+        const group = {
+            groupName: state.gameData[i].groupName,
+            words: [],
+        }
+        for (let j = 0; j < state.wordsPerGroup; j++){
+            group.words.push({
+                word: state.gameData[i].words[j],
+                selected: false,
+            })
+        }
+        wordGrid.push(group)
+    }
+    console.log(wordGrid)
+
+
+
     const [attempts, setAttempts] = useState([true, true, true, true]);
     const [isDeleting, setIsDeleting] = useState(null);     // For unsuccessful matches
     const [isHopping, setIsHopping] = useState(false);      // For successful matches
     const [isVisible, setIsVisible] = useState(false);      // For transition
 
+    
     const words = [                                         // Structure for words in tiles
         {group1 : [
             {word : "WORD1", selected : false}, 
@@ -55,13 +91,17 @@ function PlayGame() {
             {word : "WORD15", selected : false}, 
             {word : "WORD16", selected : false}]
         },
+        
       ];
+      
 
     // Need to check if a group of words selected is part of the same group name
 
     function checkGroup() {
     
     }
+
+
     useEffect(() => {
         setIsVisible(true);
         document.title = "Play Game";
