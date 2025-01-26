@@ -3,5 +3,23 @@
     flex-direction: column;
     justify-content: center;
     align-items: center;
-    height: 100vh;
+    height: 80vh;
+}
+
+.lives-container {
+    display: flex;
+    position: fixed;
+    flex-direction: row;
+    justify-content: space-between;
+    text-align: center;
+    bottom: 17%;
+}
+
+.circle {
+    width: 15px;
+    height: 15px;
+    background-color: #5a594e;
+    border-radius: 50%;
+    margin: 0px 10px;
+    bottom: -5px;
 }

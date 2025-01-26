@@ -34,7 +34,6 @@ function CreateGame(){
         for (let i = 0; i < wordsPerGroup; i++) {
             filledArray.push("");
         }
-
         //alert(filledArray)
         for (let i = 0; i < groups; i++) {
             const group = {
@@ -55,7 +54,8 @@ function CreateGame(){
             ...gameInfo,
             gameName: value
         });
-        alert(JSON.stringify(gameInfo))
+        //alert(JSON.stringify(gameInfo))
+        //alert(JSON.stringify(gameData))
     }
     // Creator Name
     const creatorNameChange = (e) => {
@@ -103,19 +103,40 @@ function CreateGame(){
 
     // Group update - needs one parameter
     const updateGameDataGroup = (val, indexGroup)=>{
-        gameData[indexGroup].groupName = val
-        alert(JSON.stringify(gameData[indexGroup]))
+        
+        const updatedGameData = [...gameData]; // Create a shallow copy of gameData
+        updatedGameData[indexGroup] = {
+            ...updatedGameData[indexGroup], // Copy the existing group object
+            groupName: val, // Update the groupName
+            };
+        setGameData(updatedGameData);
+        //alert(JSON.stringify(gameData[indexGroup]))
     }
     
     // word update - needs one parameter
     const updateGameDataWords = (val, indexGroup, indexWord)=>{
-        gameData[indexGroup].words[indexWord] = val
-        alert(JSON.stringify(gameData[indexGroup]))
+        //gameData[indexGroup].words[indexWord] = val
+        //alert(JSON.stringify(gameData[indexGroup]))
+
+        const updatedGameData = [...gameData]; // Create a shallow copy of gameData
+        const updatedGroup = { ...updatedGameData[indexGroup] }; // Copy the specific group
+        updatedGroup.words[indexWord] = val; // Update the specific word
+        updatedGameData[indexGroup] = updatedGroup; // Replace the group in gameData
+        setGameData(updatedGameData);
     } 
 
 
-    const handleSubmit = (e) => {
+    function handleSubmit(e) {
         e.preventDefault() 
+
+        const gameUpload = {
+            ...gameInfo,
+            gameData,
+        }
+
+        console.log("Form Data:", JSON.stringify(gameUpload))
+        alert(JSON.stringify(gameInfo))
+        alert(JSON.stringify(gameData))
         //axios.post('http://localhost:3000/api/items', gameInfo)       // Send a POST request to Flask backend
     }
 
@@ -128,9 +149,11 @@ function CreateGame(){
     
       return (
       <div className="container text-center my-5">
+        
         <h1 className="display-4 text-success">Create game</h1>
+        
         <p className="lead text-muted">
-            Create game here
+            Create game using this form
             <form onSubmit={handleSubmit}>
 
                 {/*Game name input*/}
@@ -173,7 +196,6 @@ function CreateGame(){
                     onChange={visibilityChange}
                     required/>
                     Private
-
                 </div>
 
                 {/*Category multiple select input*/}
@@ -216,65 +238,43 @@ function CreateGame(){
                         <option key={num} value={num}>{num}</option>))}
                     </select>
                 </div>
-               
-                {/*Inputing group title
-                <div className="mb-3">
-                    <label htmlfor="gameName">Game Name</label>
-                    <input 
-                    type="text"
-                    name = "gameName"
-                    value={gameInfo.gameName}
-                    onChange={gameNameChange}
-                    required
-                    />
-                </div>
-                
-                
-                */}
-                
-                {/*Inputing X words for group*/}
-
-                {/*Repeat for the total # of groups selected*/}
-                {/*Inputing group title*/}
-
-                {/*Inputing X words for group*/}
-
+            
                 {gameData.map((groupObject, indexGroup)=>
                 <div>
                         <div className="mb-3">
-                            <label htmlfor="groupName">Group name</label>
+                            <label>Group name</label>
                             <input type="text"
                             name = "groupName"
-                            
-                            onChange={(e)=>updateGameDataGroup(e.target.value, indexGroup)} // update title
+                            value = {gameData[indexGroup].groupName}
+                            onChange={(e)=>updateGameDataGroup(e.target.value, indexGroup)} // update group
                             required/>
                         </div>
                         {groupObject.words.map((words, indexWord)=>
                             <div>
                                 <p></p>
-                                <span >
-                                    <label htmlfor="wordInput">inputBox</label>
+                                <div >
+                                    <label>inputBox</label>
                                     <input type="text"
                                     name = "wordInput"
                                     value={gameData[indexGroup].words[indexWord]}
                                     onChange={(e)=>updateGameDataWords(e.target.value, indexGroup, indexWord)} //update words
                                     required/>
-                                </span>
+                                </div>
                             </div>
                         )}
-
-
                 </div>)}
-                
 
-                <button type="submit">Submit</button>
+                <button type="submit">
+                    Submit
+                </button>
              </form>
         </p>
       </div>
     );
 }
-  
 export default CreateGame;
+
+
   {/*
                     {x.map((y)=>
                     

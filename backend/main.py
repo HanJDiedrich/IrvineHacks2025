@@ -1,4 +1,4 @@
-import source.sql_manager as sql_manager
+import backend.sql_manager as sql_manager
 from flask import Flask, render_template, request, redirect, jsonify
 from flask_cors import CORS
 
@@ -14,6 +14,7 @@ def get_data():
         # Fill this out later
     ]
     return jsonify(items)
+
 
 # Use axios for POST and GET requests???
 # Add data to Flask backend

@@ -22,7 +22,7 @@ const words = [
   {word : "WORD18", selected : false}, 
 ];
 
-function Gameboard() {
+function Gameboard( {handleSubmit} ) {
   const [tiles, setTiles] = useState(words);
 
   // shuffle word function
@@ -54,13 +54,15 @@ function Gameboard() {
         <p className="subtitle">Create groups of four!</p>
       </header>
 
-      <button id="shuffleButton" onClick={shuffleWords}>
-        Shuffle Words
-      </button>
+      <div className="button-container">
+        <button id="shuffleButton" onClick={shuffleWords}>
+            Shuffle Words
+        </button>
 
-      <button id="submitButton" onClick={shuffleWords}>
-        Submit
-      </button>
+        <button id="submitButton" onClick={handleSubmit}>
+            Submit
+        </button>
+      </div>
 
       <div className="grid">
         {tiles.map((word, index) => (

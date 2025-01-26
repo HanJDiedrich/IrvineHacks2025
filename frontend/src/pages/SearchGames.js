@@ -1,8 +1,6 @@
 // src/pages/Home.js
 import React, { useState, useEffect } from 'react';
 import './SearchGames.css';
-import Gameboard from '../components/gameboard';
-import GameLives from '../components/gamelives';
 
 //import { useNavigate } from 'react-router-dom';  // Import useNavigate for routing
 
@@ -73,8 +71,6 @@ function SearchGames() {
         </p>
         <>
           <SearchList filteredGames={filteredGames}/>
-          <Gameboard />
-          <GameLives />
         </>
     </div>
   );

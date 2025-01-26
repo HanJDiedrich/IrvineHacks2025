@@ -3,8 +3,9 @@
   justify-content: space-between;
   align-items: center;
   background-color: #0d2c54;
-  color: #fff;
-  padding: 10px 20px;
+  color: #f0cf65;
+  padding: 20px 20px;
+  font-family: 'DM Sans', sans-serif;
 }
 
 .navbar-links {

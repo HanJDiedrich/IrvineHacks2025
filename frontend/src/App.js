@@ -1,12 +1,14 @@
 import React from "react";
-import { BrowserRouter as Router, Route, Routes} from "react-router-dom";
+import { BrowserRouter as Router, Routes, Route } from 'react-router-dom';
 import StartUpScreen from "./pages/StartUpScreen";
 import Home from "./pages/Home";
 import CreateGame from "./pages/CreateGame";
 import PlayGame from "./pages/PlayGame";
 import SearchGames from "./pages/SearchGames";
+import Layout from "./components/Layout";
 import Navbar from './components/navbar';
-import './index.css'
+import './index.css';
+
 
 const App = () => {
   return (
@@ -16,8 +18,9 @@ const App = () => {
         <Route path="/" element={<StartUpScreen />} />
         <Route path="/Home" element={<Home />} />
         <Route path="/CreateGame" element={<CreateGame />} />
-        <Route path="/PlayGame/:gameId" element={<PlayGame />} />
-        <Route path="/SearchGames" element={<SearchGames />} />
+        {/* <Route path="/PlayGame/:gameId" element={<PlayGame />} /> */}
+        {/* <Route path="/SearchGames" element={<SearchGames />} /> */}
+        <Route path="/SearchGames" element={<PlayGame />} />
       </Routes>
     </Router>
   );

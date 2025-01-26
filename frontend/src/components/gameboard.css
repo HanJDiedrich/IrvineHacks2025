@@ -7,14 +7,12 @@
     flex-direction: column;
     justify-content: center;
     align-items: center;
-    height: 100vh;
+    height: 100px;
+    position: absolute;
   }
   
 .title-container {
-    position: absolute;
-    top: 100px;
-    right: 530px;
-    transform: translateX(-50%);
+    top: 0px;
     text-align: center;
 }
 
@@ -72,7 +70,39 @@ h1 {
     color: white;
 }
 
-.shuffleButton{
-    margin-top: -20px;
+.button-container {
+    display: flex;
+    flex-direction: row;
+    justify-content: center;
+    column-gap: 20px;
+    width: 100%;
+    position: relative;
+    border-radius: 20px;
+    height: 67px;
+    align-items: center;
+    bottom: -460px;
+    
 }
+
+button{
+width: 100%; /* Full width */
+  position: relative;
+  border-radius: 20px; /* Rounded corners */
+  background-color: #426a5a; /* Button background */
+  height: 67px; /* Button height */
+  color: #fff; /* White text */
+  font-size: 24px; /* Text size */
+  font-family: 'DM Sans', sans-serif;
+  cursor: pointer;
+  transition: background-color 0.3s ease;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+
+}
+
+button:hover {
+    background-color: #f0cf65;
+    color: #0d2c54;
+  }
   

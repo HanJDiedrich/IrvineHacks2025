@@ -10,21 +10,11 @@
     text-align: center; /* Center text */
     font-family: 'DM Sans', sans-serif; /* Font family */
   }
-  
-  .startUpScreenChild {
-    background-color: #0d2c54; /* Navy background */
-    width: 100%; /* Full width */
-    height: 100px; /* Fixed height for the header */
-    display: flex;
-    align-items: center;
-    justify-content: space-between; /* Space between logo and links */
-    padding: 0 20px; /* Horizontal padding */
-    box-sizing: border-box;
-  }
-  
-  .zottegories {
-    color: #f0cf65; /* Yellow text for the header title */
-    font-size: 24px; /* Font size */
+
+  .buttonContainer {
+    display: flex; /* Arrange buttons in a row */
+    justify-content: center; /* Center buttons horizontally */
+    gap: 20px; /* Space between buttons */
   }
   
   .searchASet {
@@ -34,16 +24,25 @@
     cursor: pointer; /* Pointer cursor for interaction */
   }
   
-  .zottegories1 {
-    font-size: 96px; /* Large font for main title */
-    color: #000; /* Black text */
-    margin: 20px 0; /* Spacing above and below */
+  .zottegories-title {
+    width: 540px;
+    position: relative;
+    font-size: 96px;
+    font-family: 'DM Sans';
+    color: #000;
+    text-align: center;
+    height: 123px;
   }
   
   .letsMakeSome {
-    font-size: 48px; /* Subtitle font size */
-    color: #000; /* Black text */
-    margin: 20px 0; /* Spacing above and below */
+    width: 1000px;
+    position: relative;
+    font-size: 48px;
+    display: flex;
+    font-family: 'DM Sans';
+    font-weight: bold;
+    color: #000;
+    text-align: center;
   }
   
   .startUpScreenItem,
@@ -60,6 +59,8 @@
     margin: 10px; /* Spacing between buttons */
     cursor: pointer; /* Pointer cursor for interaction */
     transition: background-color 0.3s ease; /* Smooth hover effect */
+    font-family: 'DM Sans', sans-serif;
+    font-weight: bold;
   }
   
   .startUpScreenItem:hover,
