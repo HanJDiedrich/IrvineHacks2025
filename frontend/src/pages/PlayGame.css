@@ -1,23 +1,29 @@
+/* Container for gameplay */
 .gameplay-container {
+    font-family: 'DM Sans', serif;
+    background-color: #ffffff;
+    padding: 0;
     display: flex;
     flex-direction: column;
-    justify-content: center;
+    justify-content: flex-start;
     align-items: center;
-    height: 80vh;
-    font: 'DM Sans', sans-serif;
-    opacity: 0;
-    animation: fadeIn 0.5s ease forwards;
+    min-height: 200px;  /* Ensure that the gameplay container has some height */
+    
+    margin-top: 40px;
 }
 
+/* Add space between game board and game lives */
+
 .lives-container {
-    position: relative;    
     display: flex;
-    flex-direction: row;
+    justify-content: center;
     text-align: center;
-    bottom: -275px;
-    width: 30%;
-    left: 5%;
-    font-family: 'DM Sans', sans-serif;
+    position: relative;
+    margin-top: 25vh; 
+    width: 100%; 
+    padding: 50px;
+    height: 10%;
+    
 }
 
 .circle {

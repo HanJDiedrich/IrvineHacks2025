@@ -5,7 +5,9 @@ import CreateGame from "./pages/CreateGame";
 import PlayGame from "./pages/PlayGame";
 import SearchGames from "./pages/SearchGames";
 import Navbar from './components/navbar';
+
 import './index.css';
+
 
 
 const App = () => {

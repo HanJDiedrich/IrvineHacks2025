@@ -1,26 +1,27 @@
-import React, { useState } from "react";
+
+import React, { useState, useEffect } from "react";
 import "./gameboard.css";
+import { useNavigate } from 'react-router-dom';
+import { all } from "axios";
 
-function Gameboard( {wordGrid, words, handleSubmit, isHopping} ) { 
+function Gameboard( {matchedWords, unmatchedWords, groupCount, wordsPerGroupCount, handleSubmit, isHopping} ) { 
+    //console.log("The new words:", wordGrid)
+    //console.log("Number of groups:", groupCount)
+    //console.log("Number of words in a group:", wordsPerGroupCount)
+    //const newWordGrid = [...wordGrid]
+    //console.log("The new word grid:", wordGrid)
 
-    console.log("The new words:", wordGrid)
-    const newWordGrid = [...wordGrid]
-    console.log("The new word grid:", wordGrid)
-
+  // Shuffle word function
+  useEffect(() => {
+    if(unmatchedWords.length == 0){
+      setGameOver(true);
+      setTiles(shuffleArray([...unmatchedWords]));
+    }else{
+      setTiles(shuffleArray([...unmatchedWords]));
+    }
     
-    const allWords = words.flatMap(group => {
-    const groupKey = Object.keys(group)[0];
-    return group[groupKey].map(item => (
-        { word: item.word, 
-          selected: item.selected}
-        ));
+  }, [unmatchedWords]);
 
-
-    });
-
-    
-
-  // shuffle word function
   const shuffleArray = (array) => {
     for (let i = array.length - 1; i > 0; i--) {
       const j = Math.floor(Math.random() * (i + 1));
@@ -30,52 +31,88 @@ function Gameboard( {wordGrid, words, handleSubmit, isHopping} ) {
   };
 
   const shuffleWords = () => {
-    setTiles(shuffleArray([...allWords])); // Create a new array to avoid mutation
+    setTiles(shuffleArray([...unmatchedWords])); // Create a new array to avoid mutation
   };
 
-  // Need to shuffle tiles
-  const [tiles, setTiles] = useState(shuffleArray(allWords));
+  // Add words to the tiles and shuffles them
+  const [tiles, setTiles] = useState(shuffleArray(unmatchedWords));
+  const [matchedTiles, setMatchedTiles] = useState(matchedWords);
+  const [gameOver, setGameOver] = useState(false);
+  const [displayGroupName, setDisplayGroupName] = useState("");
+  const [notAMatch, setNotAMatch] = useState(false);
 
-  function checkCorrectGroups() {
-    // Check if selected tiles in the same group in words array
-    for (const group of words) {
-        const groupName = Object.keys(group)[0];
-        const groupArray = group[groupName];
 
-        const allSelectedMatch = groupArray.every(word => word.selected);
-        
-        if (allSelectedMatch) {
-            console.log("True")
-            return true;
-        }
 
-    console.log("False")
-    return false;
-  }
-}
-
-  // Select max 4 tiles
+  // Select max wordsPerGroupCount tiles
   const handleTileClick = (index) => {
     const newSelectedTiles = [...tiles];
-    console.log(tiles.filter(e => e.selected).length < 4)
+    console.log("Selected tiles: ",tiles.filter(e => e.selected).length < wordsPerGroupCount)
 
-    if (newSelectedTiles[index].selected || tiles.filter(e => e.selected).length < 4) {
-      newSelectedTiles[index].selected = !newSelectedTiles[index].selected;
+    if (newSelectedTiles[index].selected || tiles.filter(e => e.selected).length < wordsPerGroupCount) { //don't allow selection if enough selected already
+      newSelectedTiles[index].selected = !newSelectedTiles[index].selected; //deselect if already selected
       setTiles(newSelectedTiles);
     }
   };
 
   const handleTileSubmit = () => {
-    const isCorrect = handleTileClick();
-    return handleSubmit(isCorrect);
-  };
+    const selectedTiles = tiles.filter(tile => tile.selected);
 
+    console.log("Submit selected:",selectedTiles)
+
+    // Check if enough was selected
+    if (selectedTiles.length < wordsPerGroupCount){
+      console.log("not enough ")
+      return;
+    }
+    //Check for group match
+    const groupMatch = selectedTiles[0].groupName
+    console.log("Is this the group?:", groupMatch)
+    
+    //Check all selected
+    const allInSameGroup = selectedTiles.every(tile => tile.groupName === groupMatch)
+    console.log("This is the match:", allInSameGroup)
+
+    const isCorrect = allInSameGroup
+
+    if(isCorrect){
+      console.log("This is the match:", groupMatch)
+      setDisplayGroupName(groupMatch)
+      setTimeout(() => setDisplayGroupName(""), 4000);
+    }else{
+      setNotAMatch(true)
+      setTimeout(() => setNotAMatch(""), 4000);
+    }
+
+    handleSubmit(isCorrect, tiles);
+
+
+  };
+  const navigate = useNavigate()
+
+  const handleGoHome = () => {
+    navigate("/"); // Navigate to home page
+
+  };
   return (
     <div className="game-container">
       <header className="title-container">
         <h1 className="title">Zottegories</h1>
-        <p className="subtitle">Create groups of four!</p>
+        <p className="subtitle">Match groups of {wordsPerGroupCount} words!</p>
       </header>
+
+      {/* Display matched group name */}
+      {displayGroupName && (
+        <div className="group-name-popup">
+          <h2>Matched Group: {displayGroupName}</h2>
+        </div>
+      )}
+
+      {/* Display not a match */}
+      {notAMatch && (
+        <div className="group-name-popup">
+          <h2>Not a match</h2>
+        </div>
+      )}
 
       <div className="button-container">
         <button id="shuffleButton" onClick={shuffleWords}>
@@ -86,6 +123,13 @@ function Gameboard( {wordGrid, words, handleSubmit, isHopping} ) {
             Submit
         </button>
       </div>
+
+      {gameOver && (
+        <div className="victory-popup">
+          <h2>Congratulations, You Won!</h2>
+          <button onClick={handleGoHome}>Go to Home</button>
+        </div>
+      )}
 
       <div className="grid">
         {tiles.map((word, index) => (
@@ -98,6 +142,10 @@ function Gameboard( {wordGrid, words, handleSubmit, isHopping} ) {
           </div>
         ))}
       </div>
+
+      
+
+
     </div>
   );
 };

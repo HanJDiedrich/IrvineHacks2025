@@ -19,9 +19,16 @@ class MySQLManager():
             print("Connection unsuccessful.")
     
     def get_games(self):
-        self.cursor.execute("SELECT name, creatorName, category, dateCreated FROM games")
-        games = self.cursor.fetchAll()
+        self.cursor.execute("SELECT name, creatorName, category, dateCreated FROM games ORDER BY dateCreated DESC")
+        games = self.cursor.fetchall()
         return jsonify(games)
+    
+    def get_games_category(self, category):
+        query = f"SELECT name, creatorName, category, dateCreated FROM games WHERE category = '{category}' ORDER BY dateCreated DESC"
+        self.cursor.execute(query)
+        games = self.cursor.fetchall()
+        return jsonify(games)
+    
     def get_game_data(self, gameId):
         pass
 
@@ -101,7 +108,7 @@ class MySQLManager():
 
 if __name__ == '__main__':
     manager = MySQLManager()
-    print(manager.search_games_categories('Math'))
+    #print(manager.search_games_categories('Math'))
 
     #sql_filepath = "sampleData.sql"
     #manager._execute_sql_commands(sql_filepath)

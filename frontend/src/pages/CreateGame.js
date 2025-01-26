@@ -157,14 +157,14 @@ function CreateGame(){
             if (response.ok){
                 const data = await response.json();
                 console.log("Game Created Successfully:", response.data);
-                alert("Game Created Successfully!");
+                //("Game Created Successfully!");
             }else{
                 console.log("Error creating game:");
-                alert("There was an error creating the game.");
+                //alert("There was an error creating the game.");
             }
         } catch (error){
             console.log("Network error:", error);
-            alert("There was a network error.");
+            //alert("There was a network error.");
         }
 
     }

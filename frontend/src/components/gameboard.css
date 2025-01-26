@@ -1,3 +1,4 @@
+
 .game-container {
     font-family: 'DM Sans', serif;
     background-color: #ffffff;
@@ -11,7 +12,8 @@
     position: absolute;
     margin-top: 0px;
   }
-  
+
+
 .title-container {
     top: 0px;
     text-align: center;

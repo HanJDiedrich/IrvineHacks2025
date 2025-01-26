@@ -45,7 +45,7 @@ function PlayGame() {
         }
     }
         */
-    
+
     // Data structure for words (1D array)
     const wordGrid = [];
     for (let i = 0; i < state.groups; i++){
@@ -54,11 +54,11 @@ function PlayGame() {
                 groupName: state.gameData[i].groupName,
                 word: state.gameData[i].words[j],
                 selected: false,
-                matched: false,
             })
         }
     }
     console.log(wordGrid)
+
 
 
     const [attempts, setAttempts] = useState([true, true, true, true]);
@@ -66,43 +66,54 @@ function PlayGame() {
     const [isHopping, setIsHopping] = useState(false);      // For successful matches
     const [isVisible, setIsVisible] = useState(false);      // For transition
 
-    const [matchedWords, setMatchedWords] = useState([])
-    const [unmatchedWords, setUnmatchedWords] = useState(wordGrid)
+    
+    const words = [                                         // Structure for words in tiles
+        {group1 : [
+            {word : "WORD1", selected : false}, 
+            {word : "WORD2", selected : false}, 
+            {word : "WORD3", selected : false}, 
+            {word : "WORD4", selected : false}] 
+        },
+        {group2 : [
+            {word : "WORD5", selected : false}, 
+            {word : "WORD6", selected : false}, 
+            {word : "WORD7", selected : false}, 
+            {word : "WORD8", selected : false}]
+        },
+        {group3 : [
+            {word : "WORD9", selected : false}, 
+            {word : "WORD10", selected : false}, 
+            {word : "WORD11", selected : false}, 
+            {word : "WORD12", selected : false}]
+        },
+        {group4 : [
+            {word : "WORD13", selected : false}, 
+            {word : "WORD14", selected : false}, 
+            {word : "WORD15", selected : false}, 
+            {word : "WORD16", selected : false}]
+        },
+        
+      ];
+      
+
+    // Need to check if a group of words selected is part of the same group name
+
+    function checkGroup() {
+    
+    }
+
 
     useEffect(() => {
         setIsVisible(true);
         document.title = "Play Game";
-        const wordGrid = [];
-        for (let i = 0; i < state.groups; i++){
-            for (let j = 0; j < state.wordsPerGroup; j++){
-                wordGrid.push({
-                    groupName: state.gameData[i].groupName,
-                    word: state.gameData[i].words[j],
-                    selected: false,
-                    matched: false,
-                })
-            }
-        }
-        console.log(wordGrid)
     }, []);
 
-    const handleSubmit = ( isCorrect, tiles) => {                            
+    const handleSubmit = ( isCorrect ) => {                            
         // Correct answer
         if (isCorrect) {
             setIsHopping(true);
             setTimeout(() => setIsHopping(false), 500);         // Control wait time for bouncing animation
             //Handle correct option
-            const selectedTiles = tiles.filter(tile => tile.selected);
-            console.log("PlayGame selected:", selectedTiles)
-            setTimeout(() => {
-
-                const remainingWords = unmatchedWords.filter(
-                    (tile) => !selectedTiles.some(selected => selected.word === tile.word)
-                );
-                console.log("Remaining words:", remainingWords)
-    
-                setUnmatchedWords(remainingWords);
-            },500)
             
 
 
@@ -120,10 +131,10 @@ function PlayGame() {
         <div>
             <div className={`gameplay-container ${isVisible ? "fade-in" : ""}`}>
                 <Gameboard 
-                    matchedWords= {matchedWords}
-                    unmatchedWords={unmatchedWords} 
+                    wordGrid={wordGrid} 
                     groupCount={groupCount} 
                     wordsPerGroupCount={wordsPerGroupCount} 
+                    words={words} 
                     handleSubmit={handleSubmit} 
                     isHopping={isHopping}
                 />

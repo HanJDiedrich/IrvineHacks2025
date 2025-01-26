@@ -30,7 +30,6 @@ def upload_data():
     manager.insert_new_game(gameName, public, creatorName, category, groups, wordsPerGroup, gameData, gameLink)
     #gameName, public, creatorName, category, groups, wordsPerGroup, gameData, gameLink
 
-
     return jsonify({"message": "Game created"}), 200
 
 # Use axios for POST and GET requests???
@@ -39,29 +38,17 @@ def upload_data():
 @app.route('/get_game_data', methods=['GET'])
 def get_game_data():
     manager = SQLMan.MySQLManager()
-    
+    games = manager.get_games()
+    print(games)
+    return games
 
-
-def add_data():
-    data = request.json
-    # Json data needed for upload
-    name = data['name']
-    public = data['public']
-    rowX = data['rowX']
-    rowY = data['rowY']
-    creatorName = data['creatorName']
-    gameLink = data['gameLink']
-    gameData = data['gameData']
-
-    return jsonify({"message": "Do something with data"}), 201
-
-@app.route('/', methods=['GET','POST'])
-def index():
-    if request.method == "POST":
-        details = request.form      # Get all values from form on index.html
-        username = details['username']      # Example field and data value
-
-    return render_template('index.html')
+@app.route('/get_category_data', methods=['GET'])
+def get_category_data():
+    category = request.args.get('category')
+    manager = SQLMan.MySQLManager()
+    games = manager.get_games_category(category)
+    #print(games)
+    return games
 
 if __name__ == '__main__':
     app.run(debug=True)
