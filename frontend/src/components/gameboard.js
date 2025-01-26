@@ -1,13 +1,21 @@
 import React, { useState } from "react";
 import "./gameboard.css";
 
-function Gameboard( {words, handleSubmit, isHopping} ) { 
+function Gameboard( {wordGrid, words, handleSubmit, isHopping} ) { 
+
+    console.log("The new words:", wordGrid)
+    const newWordGrid = [...wordGrid]
+    console.log("The new word grid:", wordGrid)
+
+    
     const allWords = words.flatMap(group => {
     const groupKey = Object.keys(group)[0];
     return group[groupKey].map(item => (
         { word: item.word, 
           selected: item.selected}
         ));
+
+
     });
 
     

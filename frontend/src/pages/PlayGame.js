@@ -41,20 +41,16 @@ function PlayGame() {
         }
     }
 
-    // Data structure for words
+    // Data structure for words (1D array)
     const wordGrid = [];
     for (let i = 0; i < state.groups; i++){
-        const group = {
-            groupName: state.gameData[i].groupName,
-            words: [],
-        }
         for (let j = 0; j < state.wordsPerGroup; j++){
-            group.words.push({
+            wordGrid.push({
+                groupName: state.gameData[i].groupName,
                 word: state.gameData[i].words[j],
                 selected: false,
             })
         }
-        wordGrid.push(group)
     }
     console.log(wordGrid)
 
@@ -124,7 +120,7 @@ function PlayGame() {
 
     return (
         <div className={`gameplay-container ${isVisible ? "fade-in" : ""}`}>
-            <Gameboard words={words} handleSubmit={handleSubmit} isHopping={isHopping}/>
+            <Gameboard wordGrid={wordGrid} words={words} handleSubmit={handleSubmit} isHopping={isHopping}/>
             <GameLives attempts={attempts} isDeleting={isDeleting}/>
         </div>
     )
